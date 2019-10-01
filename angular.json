@@ -90,7 +90,8 @@
             "karmaConfig": "karma.conf.js",
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              "src/Mercedes_Benz_logo_gradient.svg"
             ],
             "styles": [
               "src/styles.scss"
