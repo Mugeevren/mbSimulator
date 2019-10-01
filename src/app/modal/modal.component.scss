@@ -1,0 +1,59 @@
+@import "../../../node_modules/bootstrap/scss/functions";
+@import "../../../node_modules/bootstrap/scss/variables";
+
+
+.modal {
+    &.show {
+        background: rgba(20, 54, 110, 0.7);
+    }
+
+    .modal-content {
+
+        .modal-header {
+            padding: 0px;
+            min-height: 30px;
+            border: 0px;
+        }
+
+        .modal-footer {
+            border: 0px;
+            padding: 0px;
+        }
+    }
+}
+
+// @media (min-width: $breakpoint-desktop) {
+//     .modal {
+//         .modal-dialog {
+//             max-width: 100%;
+//             margin: 73px 3rem 1.75rem 10.55rem;
+
+//             .modal-content {
+//                 border-radius: 0px;
+//                 border: 0;
+//                 -ms-flex: 1 1 auto;
+//                 flex: 1 1 auto;
+//                 padding: 1rem 1.5rem;
+//                 max-height: calc(100vh - 90px);
+//                 min-height: calc(100vh - 110px);
+
+//                 .close {
+//                     opacity: 1;
+//                 }
+
+//                 .modal-body {
+//                     padding: 0;
+//                 }
+//             }
+
+//             .widget {
+//                 .widget-body {
+//                     min-height: inherit;
+//                     height: auto;
+//                 }
+//             }
+//         }
+//     }
+// }
+
+
