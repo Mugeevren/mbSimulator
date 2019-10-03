@@ -3,6 +3,7 @@ import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { mercedesAuth } from 'src/environments/environment';
 import {_} from 'underscore';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -10,33 +11,34 @@ import {_} from 'underscore';
 export class AuthService {
 
   constructor(
-    public http: HttpClient){}
+    public http: HttpClient,
+    public router: Router){}
 
   getAuthCodeURL() {
     let authCodeURL = new URL(mercedesAuth.options.authorizationUri);
     authCodeURL.searchParams.append('response_type','code');
     authCodeURL.searchParams.append('client_id', mercedesAuth.options.clientId);
     authCodeURL.searchParams.append('redirect_uri', mercedesAuth.options.redirectUri);
-    authCodeURL.searchParams.append('scope', mercedesAuth.options.scopes[0]);
+    authCodeURL.searchParams.append('scope', mercedesAuth.options.scopes);
     return authCodeURL.href;
   }  
  
   retrieveToken(code){
-    let tokenUrl = new URL(mercedesAuth.options.accessTokenUri);   
-    tokenUrl.searchParams.append('grant_type','authorization_code');
-    tokenUrl.searchParams.append('code',code);
-    tokenUrl.searchParams.append('client_id', mercedesAuth.options.clientId);
-    tokenUrl.searchParams.append('redirect_uri', encodeURI(mercedesAuth.options.redirectUri));
-    
- 
-    console.log(encodeURI(mercedesAuth.options.redirectUri));
-    console.log(btoa(mercedesAuth.options.clientId+":"+mercedesAuth.options.clientSecret));
-    let headers = new HttpHeaders({'Authorization': 'Basic '+btoa(mercedesAuth.options.clientId+":"+mercedesAuth.options.clientSecret)});
-     this.http.post(tokenUrl.href, { headers: headers })
+    let isSuccess = false;
+    const headers = {
+      'content-type': 'application/x-www-form-urlencoded',
+      'Authorization': 'Basic '+btoa(mercedesAuth.options.clientId+":"+mercedesAuth.options.clientSecret)
+    };
+    const data = 'grant_type=authorization_code&code='+code+'&redirect_uri='+encodeURI(mercedesAuth.options.redirectUri);
+     this.http.post(mercedesAuth.options.accessTokenUri, data, {headers: headers})
     .subscribe(
-      data => this.saveToken(data),
+      data => {
+        this.saveToken(data);
+        this.router.navigate(['/vehicles']);
+      },
       err => alert(err.error.error + ' : ' +err.error.error_description)
     ); 
+
   }
  
   saveToken(token){
@@ -45,18 +47,17 @@ export class AuthService {
     localStorage.setItem('refresh_token', token.refresh_token);
     localStorage.setItem('token_expire_date', expireDate.toString());
     console.log('Obtained Access token');
-    window.location.href = mercedesAuth.options.redirectUri;
+    //window.location.href = mercedesAuth.options.redirectUri;
   }
- 
-  getResource(resourceUrl) : Observable<any>{
-    var headers = new HttpHeaders({'Content-type': 'application/x-www-form-urlencoded; charset=utf-8', 'Authorization': 'Bearer '+localStorage.getItem('access_token')});
-    return this.http.get(resourceUrl,{ headers: headers });
+
+  public isAuthenticated(): boolean {
+    const token = localStorage.getItem('access_token');
+    // Check whether the token is expired and return
+    // true or false
+    //!this.jwtHelper.isTokenExpired(token)
+
+    return token ? true : false;
   }
- 
-  checkCredentials(){
-    //TODO: check expire data for token
-    return localStorage.getItem("accsess_token") ? true : false;
-  } 
  
   logout() {
     localStorage.clear();

@@ -14,11 +14,10 @@ export class HomeComponent implements OnInit {
     public authService: AuthService){}
 
   ngOnInit(){
-      this.isAuthenticated = this.authService.checkCredentials();    
+      this.isAuthenticated = this.authService.isAuthenticated();    
       let authCodeIndex = window.location.href.indexOf('code');
       if(!this.isAuthenticated && authCodeIndex != -1){
           this.authService.retrieveToken(window.location.href.substring(authCodeIndex + 5));
-          //TODO: checkcredentials and remove auth code from search params
       }
   }
 
