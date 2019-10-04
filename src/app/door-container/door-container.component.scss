@@ -3,22 +3,22 @@
     flex-wrap: wrap;
     justify-content: center;
     margin-top: 16px;
+    max-width: 600px;
 
-    .door-card:not(:last-child) {
-        margin-right: 0;
-    }
-      
-    .door-card:not(.highlight-card) {
-        cursor: pointer;
-    }
+    // .door-card:not(:last-child) {
+    //     margin-right: 0;
+    // }
+
+    // .door-card{
+    //     &.main-lock-button {
+    //         cursor: pointer;
+    //         width: 100%;
+    //         &:hover {
+    //             transform: translateY(-3px);
+    //             box-shadow: 0 4px 17px rgba(black, 0.35);
+    //         }
+    //     }
+    // }
     
-    .door-card:not(.highlight-card):hover {
-        transform: translateY(-3px);
-        box-shadow: 0 4px 17px rgba(black, 0.35);
-    }
-    
-    .door-card:not(.highlight-card):hover .material-icons path {
-        fill: rgb(105, 103, 103);
-    }
 
 }

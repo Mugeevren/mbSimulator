@@ -1,6 +1,6 @@
 import { BaseValue } from './base-value';
 
-export class Door {
+export class Doors {
     doorstatusfrontleft: BaseValue;
     doorstatusfrontright: BaseValue;
     doorstatusrearleft: BaseValue;
@@ -13,3 +13,22 @@ export class Door {
     doorlockstatusgas: BaseValue;
     doorlockstatusvehicle: BaseValue;
 }
+
+export const ValidValue: string = "VALID";
+
+export enum DoorStatusEnum {
+    open = "OPEN",
+    closed = "CLOSED"
+}
+
+export enum DoorLockStatusEnum {
+    locked = "LOCKED",
+    unlocked = "UNLOCKED "
+}
+
+export enum DoorLockCommandEnum {
+    lock = "LOCK",
+    unlock = "UNLOCK "
+}
+
+

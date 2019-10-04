@@ -1,6 +1,6 @@
-import { Component, OnInit, ElementRef, ViewChild, Input } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, Input, Output } from '@angular/core';
 import * as $ from 'jquery';
-import { element } from 'protractor';
+import { element, EventEmitter } from 'protractor';
 
 @Component({
   selector: 'mb-door-button',
@@ -11,20 +11,27 @@ export class DoorButtonComponent implements OnInit {
 
   isLoading: boolean = false;
 
-  @Input('mb-door') door: any; //TODO: door UI model
-  constructor(public element: ElementRef) { }
+  @Input('mb-door') door: any;
+  @Output() refreshCarList: EventEmitter; //TODO: implement get door status on door-container component
+  constructor(public element: ElementRef) {
+     //this.refreshCarList = new EventEmitter();
+   }
 
   ngOnInit() {
     console.log(this.door);
   }
 
   onDoorClick() {
-    this.isLoading = true;
-    // make your ajax call here instead of the timeout
-    setTimeout(() => {
-      this.isLoading = false;
-      this.door.isLocked = !this.door.isLocked;
-    }, 2000)
+    if(this.door.isClickable){
+      this.isLoading = true;
+      // TODO: remove settimeout, do lock post call
+      setTimeout(() => {
+        this.isLoading = false;
+        this.door.isLocked = !this.door.isLocked;
+        //this.refreshCarList.emit();
+      }, 2000);
+    }
+    
   }
   
 

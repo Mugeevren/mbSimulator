@@ -1,36 +1,21 @@
-//my styles
+.connect-container {
+    text-align: center;
+    padding: 20px 50px;
+    .app-icon-container {
 
-.mb-header {
-    background-color: #000;
-    border-bottom: 1px solid #000;
-
-    .mercedes-logo {
-        width: 40px;
     }
 
-    .car-id {
-        -webkit-box-flex: 1;
-        flex: 1;
-        height: 100%;
-        line-height: 63px;
-        padding-left: 24px;
-        font-size: 12px;
-        font-weight: 700;
-        color: #fff;
-
-        .id-label {
-            color: #00adef;
+    .content-container {
+        .content-text {
+            max-width: 350px;
+            margin-bottom: 20px;
+        }
+        button {
+            width: 100%;
+            margin-bottom: 5px;
+            margin-top: 5px;
+            font-size: 14px;
         }
     }
-  }
 
-  .content {
-    display: flex;
-    margin: 32px auto;
-    padding: 0 16px;
-    max-width: 960px;
-    flex-direction: column;
-    align-items: center;
-
-    
-  }
+}

@@ -1,0 +1,24 @@
+.vehicle-detail-container {
+    display: flex;
+
+    .detail-panel {
+        border-radius: 4px;
+        border: 1px solid #eee;
+        padding: 20px;
+
+        .row {
+            padding-bottom: 10px;
+            .label {
+                font-size: 14px
+            }
+
+            .value {
+                font-weight: 400;
+            }
+        }
+    }
+
+    .lock-panel {
+        padding: 20px;
+    }
+}

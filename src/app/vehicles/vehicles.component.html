@@ -1,4 +1,9 @@
-<p>vehicles works!</p>
-<div>
-        <div *ngFor="let vehicle of vehicles">{{vehicle.id}}</div>
+<div class="vehicles-container">
+        <div class="your-vehicle-text">Your vehicles:</div>
+        <div class="vehicle-list">
+                <div class="vehicle-item" *ngFor="let vehicle of vehicles" (click)="onVehicleSelect(vehicle.id)">
+                        <span class="licence-plate">{{vehicle.licenseplate}}</span>
+                        <i class="fas fa-chevron-right"></i>
+                </div>
+        </div>
 </div>

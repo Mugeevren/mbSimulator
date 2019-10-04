@@ -1,5 +1,5 @@
 export class BaseValue {
-    value: number;
+    value: string;
     retrievalstatus: string;
     timestamp: number;
 }

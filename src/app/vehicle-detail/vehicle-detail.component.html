@@ -1,0 +1,35 @@
+<div class="vehicle-detail-container row">
+    <div class="col-4 detail-panel">
+        <div class="row">
+            <div class="label">License plate:</div>
+            <div class="value">{{vehicle.licenseplate}}</div>
+        </div>
+        <div class="row">
+            <div class="label">Sales Designation:</div>
+            <div class="value">{{vehicle.salesdesignation}}</div>
+        </div>
+        <div class="row">
+            <div class="label">Modal Year:</div>
+            <div class="value">{{vehicle.modelyear}}</div>
+        </div>
+        <div class="row">
+            <div class="label">Color name:</div>
+            <div class="value">{{vehicle.colorname}}</div>
+        </div>
+        <div class="row">
+            <div class="label">Fuel type:</div>
+            <div class="value">{{vehicle.fueltype}}</div>
+        </div>
+        <div class="row">
+            <div class="label">Power HP:</div>
+            <div class="value">{{vehicle.powerhp}}</div>
+        </div>
+        <div class="row">
+            <div class="label">Power KW:</div>
+            <div class="value">{{vehicle.powerkw}}</div>
+        </div>
+    </div>
+    <div class="col-8 lock-panel">
+        <mb-door-container [vehicleId]="vehicle.id" [numberOfDoors]="vehicle.numberofdoors"></mb-door-container>
+    </div>
+</div>
