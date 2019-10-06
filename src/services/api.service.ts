@@ -19,29 +19,39 @@ export class ApiService {
 
   public getVehicles(){
     let header = this.getHeader();
-    return this.httpClient.get<Vehicle[]>(`${mercedesAuth.options.apiEndpointURL}/vehicles`, { headers: header })
+    return this.httpClient.get<Vehicle[]>(`${mercedesAuth.apiEndpointURL}/vehicles`, { headers: header })
     .pipe(
         catchError(this.handleError)
     );
   }
 
   public getVehicleById(id: string){
-    return this.httpClient.get(`${mercedesAuth.options.apiEndpointURL}/vehicles/${id}`, { headers: this.getHeader() })
+    return this.httpClient.get(`${mercedesAuth.apiEndpointURL}/vehicles/${id}`, { headers: this.getHeader() })
     .pipe(
       catchError(this.handleError)
     );
   }
 
   public getVehicleDoorStatus(id: string){
-    return this.httpClient.get(`${mercedesAuth.options.apiEndpointURL}/vehicles/${id}/doors`, { headers: this.getHeader() })
+    return this.httpClient.get(`${mercedesAuth.apiEndpointURL}/vehicles/${id}/doors`, { headers: this.getHeader() })
     .pipe(
       catchError(this.handleError)
     );
   }
   
-  // public lockVehicle(vehicleId: number, door: string){
-  //   return this.httpClient.post(`${this.apiURL}/customers/`,vehicleId);
-  // }
+  public lockVehicle(vehicleId: string, command: string){
+    //return this.httpClient.post(`${this.apiURL}/customers/`,vehicleId);
+    const data = {
+      "command": command
+    };
+    return this.httpClient.post(`${mercedesAuth.apiEndpointURL}/vehicles/${vehicleId}/doors`, data, {headers: this.getHeader()})
+     .pipe(
+      catchError(this.handleError)
+    ); 
+
+  }
+
+  
 
   // Implement a method to handle errors if any
    private handleError(err: HttpErrorResponse | any) {

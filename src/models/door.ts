@@ -31,4 +31,8 @@ export enum DoorLockCommandEnum {
     unlock = "UNLOCK "
 }
 
+export enum CommandResultEnum {
+    initiated = "INITIATED",
+    rejected = "REJECTED  "
+}
 

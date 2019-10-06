@@ -1,6 +1,6 @@
-import { Component, OnInit, ElementRef, ViewChild, Input, Output } from '@angular/core';
-import * as $ from 'jquery';
-import { element, EventEmitter } from 'protractor';
+import { Component, OnInit, ElementRef, Input, Output, EventEmitter } from '@angular/core';
+import { DoorLockCommandEnum, CommandResultEnum } from 'src/models/door';
+import { ApiService } from 'src/services/api.service';
 
 @Component({
   selector: 'mb-door-button',
@@ -12,9 +12,11 @@ export class DoorButtonComponent implements OnInit {
   isLoading: boolean = false;
 
   @Input('mb-door') door: any;
-  @Output() refreshCarList: EventEmitter; //TODO: implement get door status on door-container component
-  constructor(public element: ElementRef) {
-     //this.refreshCarList = new EventEmitter();
+  @Input() vehicleId: string;
+  @Output() refreshDoors: EventEmitter<string>;
+  constructor(public element: ElementRef,
+    private apiService: ApiService) {
+     this.refreshDoors = new EventEmitter<string>();
    }
 
   ngOnInit() {
@@ -22,13 +24,28 @@ export class DoorButtonComponent implements OnInit {
   }
 
   onDoorClick() {
-    if(this.door.isClickable){
+    if(this.door.isMainLock){
       this.isLoading = true;
-      // TODO: remove settimeout, do lock post call
+      
+      this.apiService.lockVehicle(this.vehicleId, this.door.isLocked ? DoorLockCommandEnum.unlock : DoorLockCommandEnum.lock).subscribe((data: any)=>{
+        console.log(data);
+        this.isLoading = false;
+        if(data && data.status == CommandResultEnum.initiated) {
+          this.refreshDoors.emit();
+          console.log("refresh door list");
+        }
+        else {
+          alert('Unable to execute command: Please make sure all doors are closed.');
+        }
+      },
+      (error) => {
+        this.isLoading = false;
+      }); 
+
+      // // TODO: remove settimeout, do lock post call
       setTimeout(() => {
         this.isLoading = false;
         this.door.isLocked = !this.door.isLocked;
-        //this.refreshCarList.emit();
       }, 2000);
     }
     

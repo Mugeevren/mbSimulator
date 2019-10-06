@@ -18,10 +18,7 @@ export class DoorContainerComponent implements OnInit {
 
   ngOnInit() {
 
-    this.apiService.getVehicleDoorStatus(this.vehicleId).subscribe((data: Doors)=>{
-      console.log(data);
-      this.convertToDoorList(data);
-    }); 
+    this.getVehicleDoorStatus();
 
     var doorData: Doors = {
       doorstatusfrontleft: {
@@ -30,7 +27,7 @@ export class DoorContainerComponent implements OnInit {
         timestamp: 123456789
       },
       doorstatusfrontright: {
-        value: "OPEN",
+        value: "CLOSED",
         retrievalstatus: "VALID",
         timestamp: 123456789
       },
@@ -55,7 +52,7 @@ export class DoorContainerComponent implements OnInit {
         timestamp: 123456789
       },
       doorlockstatusrearleft: {
-        value: "UNLOCKED",
+        value: "LOCKED",
         retrievalstatus: "VALID",
         timestamp: 123456789
       },
@@ -65,7 +62,7 @@ export class DoorContainerComponent implements OnInit {
         timestamp: 123456789
       },
       doorlockstatusdecklid: {
-        value: "UNLOCKED",
+        value: "LOCKED",
         retrievalstatus: "VALID",
         timestamp: 123456789
       },
@@ -75,7 +72,7 @@ export class DoorContainerComponent implements OnInit {
         timestamp: 123456789
       },
       doorlockstatusvehicle: {
-        value: "UNLOCKED",
+        value: "LOCKED",
         retrievalstatus: "VALID",
         timestamp: 123456789
       }
@@ -83,6 +80,13 @@ export class DoorContainerComponent implements OnInit {
 
     this.convertToDoorList(doorData);
 
+  }
+
+  getVehicleDoorStatus() {
+    this.apiService.getVehicleDoorStatus(this.vehicleId).subscribe((data: Doors)=>{
+      console.log(data);
+      this.convertToDoorList(data);
+    }); 
   }
 
   checkIsValidDoor(doorBase: BaseValue) {
@@ -96,11 +100,10 @@ export class DoorContainerComponent implements OnInit {
     this.doorList = [];
     if(this.checkIsValidDoor(doorData.doorlockstatusvehicle)){
       this.doorList.push({
-        title: doorData.doorlockstatusvehicle.value == DoorLockStatusEnum.locked ? "Unlock the car" : "Lock the car",
+        title: "Lock the car",
         isLocked: doorData.doorlockstatusvehicle.value == DoorLockStatusEnum.locked,
         isOpened: undefined,
-        class: "main-lock-button",
-        isClickable: true
+        isMainLock: true
     });
     if(this.checkIsValidDoor(doorData.doorstatusfrontleft) && this.checkIsValidDoor(doorData.doorlockstatusfrontleft)){
       this.doorList.push({
