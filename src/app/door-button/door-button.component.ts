@@ -20,7 +20,6 @@ export class DoorButtonComponent implements OnInit {
    }
 
   ngOnInit() {
-    console.log(this.door);
   }
 
   onDoorClick() {
@@ -28,7 +27,6 @@ export class DoorButtonComponent implements OnInit {
       this.isLoading = true;
       
       this.apiService.lockVehicle(this.vehicleId, this.door.isLocked ? DoorLockCommandEnum.unlock : DoorLockCommandEnum.lock).subscribe((data: any)=>{
-        console.log(data);
         this.isLoading = false;
         if(data && data.status == CommandResultEnum.initiated) {
           this.refreshDoors.emit();
@@ -42,11 +40,6 @@ export class DoorButtonComponent implements OnInit {
         this.isLoading = false;
       }); 
 
-      // // TODO: remove settimeout, do lock post call
-      setTimeout(() => {
-        this.isLoading = false;
-        this.door.isLocked = !this.door.isLocked;
-      }, 2000);
     }
     
   }

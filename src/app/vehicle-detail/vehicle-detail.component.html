@@ -1,4 +1,4 @@
-<div class="vehicle-detail-container row">
+<div class="vehicle-detail-container row" *ngIf="vehicle">
     <div class="col-4 detail-panel">
         <div class="row">
             <div class="label">License plate:</div>
@@ -30,6 +30,6 @@
         </div>
     </div>
     <div class="col-8 lock-panel">
-        <mb-door-container [vehicleId]="vehicle.id" [numberOfDoors]="vehicle.numberofdoors"></mb-door-container>
+        <mb-door-container [vehicleId]="vehicleId" [numberOfDoors]="vehicle.numberofdoors"></mb-door-container>
     </div>
 </div>

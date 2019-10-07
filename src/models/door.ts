@@ -23,16 +23,16 @@ export enum DoorStatusEnum {
 
 export enum DoorLockStatusEnum {
     locked = "LOCKED",
-    unlocked = "UNLOCKED "
+    unlocked = "UNLOCKED"
 }
 
 export enum DoorLockCommandEnum {
     lock = "LOCK",
-    unlock = "UNLOCK "
+    unlock = "UNLOCK"
 }
 
 export enum CommandResultEnum {
     initiated = "INITIATED",
-    rejected = "REJECTED  "
+    rejected = "REJECTED"
 }
 

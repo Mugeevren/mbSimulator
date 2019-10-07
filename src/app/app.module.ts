@@ -10,6 +10,7 @@ import { DoorContainerComponent } from './door-container/door-container.componen
 import { HomeComponent } from './home/home.component';
 import { VehiclesComponent } from './vehicles/vehicles.component';
 import { VehicleDetailComponent } from './vehicle-detail/vehicle-detail.component';
+import { PreloaderComponent } from './preloader/preloader.component';
 
 
 const appRoutes: Routes = [
@@ -27,7 +28,8 @@ const appRoutes: Routes = [
     DoorContainerComponent,
     VehiclesComponent,
     HomeComponent,
-    VehicleDetailComponent
+    VehicleDetailComponent,
+    PreloaderComponent
   ],
   imports: [
     BrowserModule,

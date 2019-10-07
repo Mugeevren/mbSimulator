@@ -18,46 +18,50 @@ export class ApiService {
 
 
   public getVehicles(){
+    localStorage.setItem('isLoading', 'true');
     let header = this.getHeader();
-    return this.httpClient.get<Vehicle[]>(`${mercedesAuth.apiEndpointURL}/vehicles`, { headers: header })
+    return this.httpClient.get<Vehicle[]>(`${mercedesAuth.corsProxyEndpoindURL}/${mercedesAuth.apiEndpointURL}/vehicles`, { headers: header })
     .pipe(
         catchError(this.handleError)
     );
   }
 
   public getVehicleById(id: string){
-    return this.httpClient.get(`${mercedesAuth.apiEndpointURL}/vehicles/${id}`, { headers: this.getHeader() })
+    localStorage.setItem('isLoading', 'true');
+    return this.httpClient.get(`${mercedesAuth.corsProxyEndpoindURL}/${mercedesAuth.apiEndpointURL}/vehicles/${id}`, { headers: this.getHeader() })
     .pipe(
       catchError(this.handleError)
     );
   }
 
   public getVehicleDoorStatus(id: string){
-    return this.httpClient.get(`${mercedesAuth.apiEndpointURL}/vehicles/${id}/doors`, { headers: this.getHeader() })
+    return this.httpClient.get(`${mercedesAuth.corsProxyEndpoindURL}/${mercedesAuth.apiEndpointURL}/vehicles/${id}/doors`, { headers: this.getHeader() })
     .pipe(
       catchError(this.handleError)
     );
   }
   
   public lockVehicle(vehicleId: string, command: string){
-    //return this.httpClient.post(`${this.apiURL}/customers/`,vehicleId);
     const data = {
       "command": command
     };
-    return this.httpClient.post(`${mercedesAuth.apiEndpointURL}/vehicles/${vehicleId}/doors`, data, {headers: this.getHeader()})
+    return this.httpClient.post(`${mercedesAuth.corsProxyEndpoindURL}/${mercedesAuth.apiEndpointURL}/vehicles/${vehicleId}/doors`, data, {headers: this.getHeader()})
      .pipe(
       catchError(this.handleError)
     ); 
 
   }
 
-  
-
   // Implement a method to handle errors if any
    private handleError(err: HttpErrorResponse | any) {
+      localStorage.setItem('isLoading', 'false');
      console.error('An error occurred', err);
      alert('An error occurred' + ' : ' +err.message);
      return throwError(err.message || err);
+    }
+
+    public isLoading(): boolean {
+      return localStorage.getItem('isLoading') == "true";
     }
 
 }

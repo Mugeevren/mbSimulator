@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ApiService } from 'src/services/api.service';
 import { Doors, ValidValue, DoorLockStatusEnum, DoorStatusEnum } from 'src/models/door';
 import { BaseValue } from 'src/models/base-value';
+import { timer } from 'rxjs';
 
 @Component({
   selector: 'mb-door-container',
@@ -18,73 +19,24 @@ export class DoorContainerComponent implements OnInit {
 
   ngOnInit() {
 
-    this.getVehicleDoorStatus();
+    let counter = 0;
+    localStorage.setItem('isLoading', 'true');
+    this.getVehicleDoorStatus(true);
 
-    var doorData: Doors = {
-      doorstatusfrontleft: {
-        value: "OPEN",
-        retrievalstatus: "VALID",
-        timestamp: 123456789
-      },
-      doorstatusfrontright: {
-        value: "CLOSED",
-        retrievalstatus: "VALID",
-        timestamp: 123456789
-      },
-      doorstatusrearleft: {
-        value: "OPEN",
-        retrievalstatus: "VALID",
-        timestamp: 123456789
-      },
-      doorstatusrearright: {
-        value: "OPEN",
-        retrievalstatus: "VALID",
-        timestamp: 123456789
-      },
-      doorlockstatusfrontleft: {
-        value: "UNLOCKED",
-        retrievalstatus: "VALID",
-        timestamp: 123456789
-      },
-      doorlockstatusfrontright: {
-        value: "UNLOCKED",
-        retrievalstatus: "VALID",
-        timestamp: 123456789
-      },
-      doorlockstatusrearleft: {
-        value: "LOCKED",
-        retrievalstatus: "VALID",
-        timestamp: 123456789
-      },
-      doorlockstatusrearright: {
-        value: "UNLOCKED",
-        retrievalstatus: "VALID",
-        timestamp: 123456789
-      },
-      doorlockstatusdecklid: {
-        value: "LOCKED",
-        retrievalstatus: "VALID",
-        timestamp: 123456789
-      },
-      doorlockstatusgas: {
-        value: "UNLOCKED",
-        retrievalstatus: "VALID",
-        timestamp: 123456789
-      },
-      doorlockstatusvehicle: {
-        value: "LOCKED",
-        retrievalstatus: "VALID",
-        timestamp: 123456789
-      }
-    };
-
-    this.convertToDoorList(doorData);
+    timer(0, 4000)
+      .subscribe(() => {
+        
+        console.log(++counter);
+        this.getVehicleDoorStatus(false);
+      })
 
   }
 
-  getVehicleDoorStatus() {
+  getVehicleDoorStatus(hasPreloader: boolean) {
     this.apiService.getVehicleDoorStatus(this.vehicleId).subscribe((data: Doors)=>{
-      console.log(data);
+      if(hasPreloader) {
+        localStorage.setItem('isLoading', 'false');
+      }
       this.convertToDoorList(data);
     }); 
   }
@@ -133,20 +85,20 @@ export class DoorContainerComponent implements OnInit {
         isOpened: doorData.doorstatusrearright.value == DoorStatusEnum.open
       });
     }
-    if(this.checkIsValidDoor(doorData.doorlockstatusdecklid)){
-      this.doorList.push({
-        title: "Deck Lid",
-        isLocked: doorData.doorlockstatusdecklid.value == DoorLockStatusEnum.locked,
-        isOpened: undefined
-      });
-    }
-    if(this.checkIsValidDoor(doorData.doorlockstatusgas)){
-      this.doorList.push({
-        title: "Gas",
-        isLocked: doorData.doorlockstatusgas.value == DoorLockStatusEnum.locked,
-        isOpened: undefined
-      });
-    }
+    // if(this.checkIsValidDoor(doorData.doorlockstatusdecklid)){
+    //   this.doorList.push({
+    //     title: "Deck Lid",
+    //     isLocked: doorData.doorlockstatusdecklid.value == DoorLockStatusEnum.locked,
+    //     isOpened: undefined
+    //   });
+    // }
+    // if(this.checkIsValidDoor(doorData.doorlockstatusgas)){
+    //   this.doorList.push({
+    //     title: "Gas",
+    //     isLocked: doorData.doorlockstatusgas.value == DoorLockStatusEnum.locked,
+    //     isOpened: undefined
+    //   });
+    // }
     
     }
   }
