@@ -20,7 +20,6 @@ export class DoorContainerComponent implements OnInit {
   ngOnInit() {
 
     let counter = 0;
-    localStorage.setItem('isLoading', 'true');
     this.getVehicleDoorStatus(true);
 
     timer(0, 4000)
@@ -33,6 +32,9 @@ export class DoorContainerComponent implements OnInit {
   }
 
   getVehicleDoorStatus(hasPreloader: boolean) {
+    if(hasPreloader) {
+      localStorage.setItem('isLoading', 'true');
+    }
     this.apiService.getVehicleDoorStatus(this.vehicleId).subscribe((data: Doors)=>{
       if(hasPreloader) {
         localStorage.setItem('isLoading', 'false');

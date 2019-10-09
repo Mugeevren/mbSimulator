@@ -1,3 +1,3 @@
 <div class="door-container">
-    <mb-door-button *ngFor="let door of doorList" [mb-door]="door" [vehicleId]="vehicleId" (refreshDoors)="getVehicleDoorStatus($event)"></mb-door-button>
+    <mb-door-button *ngFor="let door of doorList" [mb-door]="door" [vehicleId]="vehicleId" (refreshDoors)="getVehicleDoorStatus(true)"></mb-door-button>
 </div>
