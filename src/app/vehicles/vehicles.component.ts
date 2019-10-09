@@ -16,19 +16,9 @@ export class VehiclesComponent implements OnInit {
     public router: Router) { }
 
   ngOnInit() {
-    this.vehicles = [{
-      id:"54F443D9684F3626D7",
-      licenseplate: "S-GG-116",
-      finorvin: "aaaa"
-    },
-    {
-      id:"11F443D9684F3626D7",
-      licenseplate: "35 AIN 280",
-      finorvin: "bbbb"
-    }];
 
     this.apiService.getVehicles().subscribe((data: Vehicle[])=>{
-      console.log(data);
+      localStorage.setItem('isLoading', 'false');
       this.vehicles = data;
     }) 
 

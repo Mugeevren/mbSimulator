@@ -15,22 +15,21 @@ export class AuthService {
     public router: Router){}
 
   getAuthCodeURL() {
-    let authCodeURL = new URL(mercedesAuth.options.authorizationUri);
+    let authCodeURL = new URL(mercedesAuth.authorizationUri);
     authCodeURL.searchParams.append('response_type','code');
-    authCodeURL.searchParams.append('client_id', mercedesAuth.options.clientId);
-    authCodeURL.searchParams.append('redirect_uri', mercedesAuth.options.redirectUri);
-    authCodeURL.searchParams.append('scope', mercedesAuth.options.scopes);
+    authCodeURL.searchParams.append('client_id', mercedesAuth.clientId);
+    authCodeURL.searchParams.append('redirect_uri', mercedesAuth.redirectUri);
+    authCodeURL.searchParams.append('scope', mercedesAuth.scopes);
     return authCodeURL.href;
   }  
  
   retrieveToken(code){
-    let isSuccess = false;
     const headers = {
       'content-type': 'application/x-www-form-urlencoded',
-      'Authorization': 'Basic '+btoa(mercedesAuth.options.clientId+":"+mercedesAuth.options.clientSecret)
+      'Authorization': 'Basic '+btoa(mercedesAuth.clientId+":"+mercedesAuth.clientSecret)
     };
-    const data = 'grant_type=authorization_code&code='+code+'&redirect_uri='+encodeURI(mercedesAuth.options.redirectUri);
-     this.http.post(mercedesAuth.options.accessTokenUri, data, {headers: headers})
+    const data = 'grant_type=authorization_code&code='+code+'&redirect_uri='+encodeURI(mercedesAuth.redirectUri);
+     this.http.post(mercedesAuth.accessTokenUri, data, {headers: headers})
     .subscribe(
       data => {
         this.saveToken(data);
@@ -52,7 +51,7 @@ export class AuthService {
 
   public isAuthenticated(): boolean {
     const token = localStorage.getItem('access_token');
-    // Check whether the token is expired and return
+    // TODO: Check whether the token is expired and return
     // true or false
     //!this.jwtHelper.isTokenExpired(token)
 

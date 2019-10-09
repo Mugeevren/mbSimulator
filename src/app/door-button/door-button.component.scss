@@ -3,7 +3,7 @@
     border-radius: 4px;
     border: 1px solid #eee;
     background-color: #fafafa;
-    height: 120px;
+    height: 80px;
     width: 250px;
     margin: 0 8px 16px;
     padding: 16px;
@@ -13,9 +13,12 @@
     align-items: center;
     transition: all 0.2s ease-in-out;
     line-height: 24px;
+    text-decoration: none;
+    
 
     &.main-lock-button {
       width: 400px;
+      height: 120px;
       &:hover {
         transform: translateY(-3px);
         box-shadow: 0 4px 17px rgba(black, 0.35);
@@ -23,9 +26,30 @@
     }
 
     &:not(.main-lock-button) {
+      padding: 5px;
+      cursor: auto;
+
       .lock-icon {
         width: 70px;
+        margin-left: 20px;
       }
+
+      .text-container {
+        display: block;
+        flex: 1;
+        text-align: right;
+        padding-right: 20px;
+
+        .door-title {
+          margin-bottom: 5px;
+        }
+  
+        .door-open-status {
+          font-size: 12px;
+  
+        }
+      }
+      
     }
     
 
@@ -90,13 +114,10 @@
         opacity: 1;
     }
   }
-
-
-  //.card-container .card:not(.highlight-card):hover {
-    //     transform: translateY(-3px);
-    //     box-shadow: 0 4px 17px rgba(black, 0.35);
-    //   }
+  
+  @media screen and (max-width: 945px) {
+    .door-card.main-lock-button {
+      width: 300px !important;
+    }
     
-    //   .card-container .card:not(.highlight-card):hover .material-icons path {
-    //     fill: rgb(105, 103, 103);
-    //   }
+  }

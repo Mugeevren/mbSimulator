@@ -20,25 +20,12 @@ export class VehicleDetailComponent implements OnInit {
     private route: ActivatedRoute) { }
 
   ngOnInit() {
+    localStorage.setItem('isLoading', 'true');
     this.vehicleId = this.route.snapshot.paramMap.get('id');
     this.apiService.getVehicleById(this.vehicleId).subscribe((data: VehicleDetail)=>{
-      console.log(data);
+      localStorage.setItem('isLoading', 'false');
       this.vehicle = data;
     }); 
-
-    this.vehicle= <VehicleDetail>{
-      id: this.vehicleId,
-      licenseplate: "S-GG-116",
-      salesdesignation: "Mercedes-AMG CLA 45 4MATIC Shooting Brake",
-      finorvin: "WDD***********002",
-      modelyear: "2017",
-      colorname: "mountaingrau metallic",
-      fueltype: "Benzin",
-      powerhp: "381",
-      powerkw: "280",
-      numberofdoors: "3",
-      numberofseats: "5"
-    };
   }
 
 }
